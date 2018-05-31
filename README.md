@@ -1,2 +1,2 @@
-# Techews
+# TechShots
 A Tech News App.
