@@ -25,4 +25,4 @@ const PostSchema = new mongoose.Schema({
 
 const Post = mongoose.model('Post', PostSchema);
 
-module.exports = { Poll };
+module.exports = { Post };

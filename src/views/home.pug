@@ -1,4 +1,15 @@
 extends template.pug
 
 block content
-    div #{content}
+    each post in posts
+        div
+            h2= post.title
+            p= post.summary
+            p
+                b Source: 
+                a(href="#")= post.source
+            div
+                b Tags: 
+                each tag in post.tags
+                    | 
+                    a(href="#")= tag
