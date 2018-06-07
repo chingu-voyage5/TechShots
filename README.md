@@ -21,7 +21,7 @@ A Tech News App by the Geckos Team 40 in Voyage 5 of The Chingu Project.
 
 ## Contributors
 
-- [Ayush Kumar](https://github.com/ayushdev)
+- [Ayush Kumar](https://github.com/ayushdev) [Project Manager]
 - [Deyl Raytop](https://github.com/DeylRaytop)
 - [Chetan Yadav](https://github.com/imchetanyadav)
 
