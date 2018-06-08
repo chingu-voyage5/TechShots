@@ -10,6 +10,8 @@ const { Post } = require('./db/models/Post');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(express.static('assets'));
+
 app.get('/', (req, res) => {
     Post
         .find()
