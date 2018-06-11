@@ -8,7 +8,7 @@ const app = express();
 const { Post } = require('./db/models/Post');
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 app.use(express.static('assets'));
 
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     Post
         .find()
         .then((posts) => {
-            res.render('home', {
+            res.render('pages/home', {
                 title: 'TechShots',
                 posts
             });
