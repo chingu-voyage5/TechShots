@@ -3,6 +3,10 @@
         <title>TechShots</title>
     </head>
     <body>
-        this is a body
+        <% posts.forEach((post) => { %>
+            <h2><%= post.title %></h2>
+            <p><%= post.summary %></p>
+            <p><b>Source:</b> <%= post.source %></p>
+        <% }) %>
     </body>
 </html>
