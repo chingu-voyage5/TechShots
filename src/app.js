@@ -29,12 +29,19 @@ app.get('/', (req, res) => {
     })
     .then((resources) => {
         return newsapi.v2.everything({
-            sources: resources,
+            sources: 'techcrunch',
+            language: 'en',
             page: 1
         })
     })
     .then((news) => {
-        res.send(news)
+        // excluding non-English news
+        return news.articles.filter((article) => {
+            return article.url.indexOf('jp.') === -1; 
+        })
+    })
+    .then((posts) => {
+        res.render('pages/home', {posts});
     })
     .catch(console.log)
 });
