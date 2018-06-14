@@ -15,9 +15,7 @@ A Tech News App by the Geckos Team 40 in Voyage 5 of The Chingu Project.
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [Pug](https://pugjs.org)
-- [Material UI](https://material.io/)
-- [Bootstrap](https://getbootstrap.com/)
+- [EJS](https://ejs.co/)
 
 ## Contributors
 
