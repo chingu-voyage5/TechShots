@@ -3,10 +3,16 @@
         <title>TechShots</title>
     </head>
     <body>
-        <% posts.forEach((post) => { %>
-            <h2><%= post.title %></h2>
-            <p><%= post.description %></p>
-            <p><b>Source:</b> <%= post.source.id %></p>
-        <% }) %>
+        <div>
+            <% posts.forEach((post) => { %>
+                <h2><%= post.title %></h2>
+                <div><img src="<%= post.urlToImage %>" alt="<%= post.title %>"></div>
+                <p><%= post.description %></p>
+                <p><b>Source:</b> <a href="<%= post.url %>" target="blank"><%= post.source.id %></a></p>
+            <% }) %>
+        </div>
+    <footer style="text-align: center;">
+        TechShots uses <a href="https://newsapi.org/" target="blank">NEWSAPI</a>
+    </footer>
     </body>
 </html>
