@@ -13,3 +13,7 @@ const MarkedPost = new mongoose.Schema({
         type: mongoose.Types.ObjectId
     }
 })
+
+const MarkedPost = mongoose.model('MarkedPost', MarkedPost);
+
+model.exports = { MarkedPost };
