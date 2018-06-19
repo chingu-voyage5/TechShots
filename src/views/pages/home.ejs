@@ -8,14 +8,14 @@
     <body>
         <div class="topbar">
           <span>
-              <img class="avatar" src="/avatar.jpg" alt="">
+              <img class="avatar" src="/avatar.svg" alt="">
           </span>
           <span>
             <img class="logo" src="/logo.svg" alt="TechShots Logo">
             <h2 class="logo-text">TechShots</h2>
           </span>
           <span>
-              <img class="avatar" src="/settings.png" alt="">
+              <img class="avatar" src="/settings.svg" alt="">
             </span>
         </div>
 
@@ -53,9 +53,13 @@
                       <h3 class="post-title"><%= post.title %></h3>
                       <p class="post-desc"><%= post.description %></p>
                       <hr>
-                      <span>
-                        ❤ 120 | 👀 320 | 🔰 Bookmark 
-                      </span>
+                      <div class="post-btns">
+                          <span class="heart"></span> 
+                          <span class="label">120</span>
+                          <span class="eye"></span>
+                          <span class="label">320</span>
+                         | 🔰 Bookmark 
+                      </div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -66,5 +70,15 @@
           </footer>
 
         </div>
+
+        <script>
+          const hearts = document.querySelectorAll('.heart');
+          hearts.forEach(heart => {
+            heart.addEventListener('click', () => {
+              heart.classList.toggle('active');
+            });
+          });
+
+        </script>
     </body>
 </html>
