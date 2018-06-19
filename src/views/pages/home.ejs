@@ -1,18 +1,84 @@
 <html>
     <head>
         <title>TechShots</title>
+        <link href="/css/base.css" rel="stylesheet">
+        <link href="/css/feed.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500" rel="stylesheet">
     </head>
     <body>
-        <div>
-            <% posts.forEach((post) => { %>
-                <h2><%= post.title %></h2>
-                <div><img src="<%= post.urlToImage %>" alt="<%= post.title %>"></div>
-                <p><%= post.description %></p>
-                <p><b>Source:</b> <a href="<%= post.url %>" target="blank"><%= post.source.id %></a></p>
-            <% }) %>
+        <div class="topbar">
+          <span>
+              <img class="avatar" src="/avatar.svg" alt="">
+          </span>
+          <span>
+            <img class="logo" src="/logo.svg" alt="TechShots Logo">
+            <h2 class="logo-text">TechShots</h2>
+          </span>
+          <span>
+              <img class="avatar" src="/settings.svg" alt="">
+            </span>
         </div>
-    <footer style="text-align: center;">
-        TechShots uses <a href="https://newsapi.org/" target="blank">NEWSAPI</a>
-    </footer>
+
+        <div class="content">
+            <div class="recommendation">
+              <div class="recommendation-item">
+                <img src="/search.png"/>
+                <span>Search</span>
+              </div>
+              <div class="recommendation-item">
+                  <img src="/suggestion.jpg"/>
+                  <span>TechCrunch</span>
+                  <span class="follow-btn">+</span>
+              </div>
+            </div>
+            
+            <div class="category">
+              <ul>
+                <li class="active"><a href="#">My Feed</a></li>
+                <li><a href="#">Popular</a></li>
+              </ul>
+            </div>
+
+            <div class="feed">
+                <% posts.forEach((post) => { %>
+                  <div class="feed-card primary">
+                    <div class="feed-image-container">
+                      <img src="<%= post.urlToImage %>" alt="<%= post.title %>">
+                    </div>
+                    <div class="feed-details">
+                      <p class="post-src">
+                        <img src="/tc.jpg"/>
+                        <!-- <a href="<%= post.url %>" target="blank"><%= post.source.id %></a> -->
+                      </p>
+                      <h3 class="post-title"><%= post.title %></h3>
+                      <p class="post-desc"><%= post.description %></p>
+                      <hr>
+                      <div class="post-btns">
+                          <span class="heart"></span> 
+                          <span class="label">120</span>
+                          <span class="eye"></span>
+                          <span class="label">320</span>
+                         | 🔰 Bookmark 
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                <% }) %>
+            </div>
+          <footer style="text-align: center;">
+              TechShots uses <a href="https://newsapi.org/" target="blank">NEWSAPI</a>
+          </footer>
+
+        </div>
+
+        <script>
+          const hearts = document.querySelectorAll('.heart');
+          hearts.forEach(heart => {
+            heart.addEventListener('click', () => {
+              heart.classList.toggle('active');
+            });
+          });
+
+        </script>
     </body>
 </html>
