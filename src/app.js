@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const NewsAPI = require('newsapi');
 
-// require('./config/config');
 require('dotenv').config();
 
 const app = express();
