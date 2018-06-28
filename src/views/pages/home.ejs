@@ -15,7 +15,7 @@
             <h2 class="logo-text">TechShots</h2>
           </span>
           <span>
-              <img class="avatar" src="/settings.svg" alt="">
+              <img class="img filter-btn" src="/settings.svg" alt="">
             </span>
         </div>
 
@@ -70,6 +70,18 @@
           </footer>
 
         </div>
+        <div class="filter-container">
+          <div>
+            Refresh
+          </div>
+          <div>
+            Sort By
+            <select>
+              <option>Most Liked</option>
+              <option>Most Recent</option>
+            </select>
+          </div>
+        </div>
 
         <script>
           const hearts = document.querySelectorAll('.heart');
@@ -78,7 +90,9 @@
               heart.classList.toggle('active');
             });
           });
-
+          const filterButton = document.querySelector('.filter-btn');
+          const filters = document.querySelector('.filter-container');
+          filterButton.addEventListener('click', () => filters.classList.toggle('active'));
         </script>
     </body>
 </html>
