@@ -1,0 +1,81 @@
+.profile-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-picture-container{
+  width: 100%;
+}
+.profile-picture-container:before{
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  border-style: solid;
+    border-width: 0 0 60px 320px;
+    border-color: transparent transparent tan;
+}
+
+.profile-picture-container img{
+  width: 100%;
+}
+
+.edit-profile-btn-container{
+  width: 6rem;
+  background-color: cadetblue;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  position: relative;
+  top: -3rem;
+  left: 1rem;
+}
+.edit-profile-btn-container img{
+  width: 4rem;
+  margin: 1rem;
+}
+
+.profile-details-container{
+  padding: 0 2rem;
+}
+.interests-title{
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #666;
+}
+.interests-container p{
+  float: left;
+  margin-right: 2rem;
+}
+
+@media only screen and (min-width: 340px){
+  .profile-picture-container {
+    width: 340px;
+  }
+  .profile-container {
+    align-items: center;
+  }
+  .profile-details-container{
+    width: 320px;
+  }
+}
+
+@media only screen and (min-width: 755px){
+  .profile-container {
+    flex-direction: row;
+    padding: 3rem;
+    align-items: initial;
+  }
+  .profile-details-container{
+    width: auto;
+    margin-top: 2rem;
+    margin-left: 3rem;
+  }
+  .edit-profile-btn-container{
+    width: 5rem;
+  }
+  .edit-profile-btn-container img{
+    width: 3rem;
+    margin: 1rem;
+  }
+}
