@@ -46,6 +46,10 @@ app.get('/', (req, res) => {
     .catch(console.log)
 });
 
+app.post('/like', (req, res) => {
+    res.send(req.body)
+})
+
 app.listen(3000, () => {
     console.log('Server is working...')
 })
