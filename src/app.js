@@ -46,9 +46,13 @@ app.get('/', (req, res) => {
     .catch(console.log)
 });
 
-app.post('/like', (req, res) => {
-    res.send(req.body)
-})
+app.get('/profile', (req, res) => {
+  res.render('pages/profile');
+});
+
+app.get('/search', (req, res) => {
+  res.render('pages/search');
+});
 
 app.listen(3000, () => {
     console.log('Server is working...')
