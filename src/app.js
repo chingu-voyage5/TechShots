@@ -16,7 +16,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('assets'));
 
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     newsapi.v2.sources({
@@ -47,6 +48,14 @@ app.get('/', (req, res) => {
         res.render('pages/home', {posts});
     })
     .catch(console.log)
+});
+
+app.get('/signup', (req, res) => {
+    res.render('pages/signup');
+});
+
+app.post('/signup', (req, res) => {
+    res.send(req.body)
 });
 
 app.get('/profile', (req, res) => {
