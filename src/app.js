@@ -10,6 +10,7 @@ const app = express();
 const newsapi = new NewsAPI(process.env.NEWSAPI);
 
 // const { Post } = require('./db/models/Post');
+const { User } = require('./db/models/User');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -55,7 +56,14 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-    res.send(req.body)
+    const user = req.body;
+    const newUser = new User(user);
+    newUser.save()
+        .then(() => {
+            return newUser.generateLoginToken();
+        })
+        .then((token) => res.header('x-token', token).send(newUser))
+        .catch((e) => res.send(e))
 });
 
 app.get('/profile', (req, res) => {
