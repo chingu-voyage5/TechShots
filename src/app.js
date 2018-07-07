@@ -62,7 +62,7 @@ app.post('/signup', (req, res) => {
         .then(() => {
             return newUser.generateLoginToken();
         })
-        .then((token) => res.header('x-token', token).send(newUser))
+        .then((token) => res.header('x-token', token).redirect('/'))
         .catch((e) => res.send(e))
 });
 
