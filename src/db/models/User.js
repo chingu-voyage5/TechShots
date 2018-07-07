@@ -8,8 +8,7 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
-        isAsync: true
+        unique: true
     },
     email: {
         type: String,
@@ -50,8 +49,8 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.generateLoginToken = function(){
     const user = this;
     const access = 'login';
-    const token = jwt.sign({_id: user._id.toHexString(), access});
-    user.tokens.push({access: token});
+    const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SEC);
+    user.tokens.push({access, token});
     
     return user.save().then(() => {
         return token;
@@ -86,7 +85,7 @@ UserSchema.statics.checkByToken = function(token){
 UserSchema.statics.giveToken = function(receivedUser){
     const User = this;
     return User
-    .findOne({login: receivedUser.login})
+    .findOne({username: receivedUser.username})
     .then((user) => {
         if (user){ 
             return new Promise((resolve, reject) => {
@@ -110,13 +109,14 @@ UserSchema.pre('save', function(next){
         bcrypt.genSalt((err, salt) => {
             bcrypt.hash(user.password, salt, (err, hashed) => {
                 if (err) return console.error(err);
-                user.password(hashed);
+                user.password = hashed;
+                console.log('hashed')
                 next();
             })
         })
     } else next();
 });
 
-const User = mongoose.model('User', UserSchema); 
+const User = mongoose.model('User', UserSchema);
 
 module.exports = {User};
