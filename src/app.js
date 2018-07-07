@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const NewsAPI = require('newsapi');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -14,6 +15,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static('assets'));
+
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
     newsapi.v2.sources({
