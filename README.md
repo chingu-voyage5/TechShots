@@ -5,10 +5,11 @@ A Tech News App by the Geckos Team 40 in Voyage 5 of The Chingu Project.
 
 ## MVP Features
 
-- [ ] A complete PWA for both Web and Mobile Users.
 - [ ] A Short Description of the News Topic.
 - [ ] A Link to the Main Article.
 - [ ] An Image related to the News Topic.
+- [ ] User Account
+- [ ] User's favorite articles
 
 ## Technology Stack
 
