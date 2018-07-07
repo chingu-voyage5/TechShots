@@ -37,6 +37,13 @@ const UserSchema = new mongoose.Schema({
                 required: true
             }
         }    
+    ],
+    favorites: [
+        {
+            post_id: {
+                type: mongoose.Schema.Types.ObjectId
+            }
+        }
     ]
 });
 
