@@ -34,15 +34,16 @@ app.get('/', (req, res) => {
     })
     .then((resources) => {
         return newsapi.v2.everything({
-            sources: 'techcrunch',
+            sources: resources,
             language: 'en',
             page: 1
         })
     })
     .then((news) => {
-        // excluding non-English news
+        // excluding non-English news and hackernews
         return news.articles.filter((article) => {
-            return article.url.indexOf('jp.') === -1; 
+            return article.url.indexOf('jp.') === -1
+                && article.source.id !== 'hacker-news'; 
         })
     })
     .then((posts) => {
