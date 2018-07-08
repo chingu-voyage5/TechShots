@@ -53,7 +53,9 @@
                         <img src="/tc.jpg"/>
                         <!-- <a href="<%= post.url %>" target="blank"><%= post.source.id %></a> -->
                       </p>
-                      <h3 class="post-title"><%= post.title %></h3>
+                      <a href="<%= post.url %>" target="blank" class="post-link">  
+                        <h3 class="post-title"><%= post.title %></h3>
+                      </a>
                       <p class="post-desc"><%= post.description %></p>
                       <hr>
                       <div class="post-btns">
