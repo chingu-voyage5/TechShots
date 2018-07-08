@@ -88,17 +88,20 @@ UserSchema.statics.giveToken = function(receivedUser){
     .findOne({username: receivedUser.username})
     .then((user) => {
         if (user){ 
+            console.log('found it', user)
             return new Promise((resolve, reject) => {
-                bcrypt.compare(receivedUser.passsword, user.password, (err, res) => {
-                    if (!res) reject();
+                bcrypt.compare(receivedUser.password, user.password, (err, res) => {
+                    if (!res) reject('Invalid password');
+                    console.log('paswd is ok')
                     resolve(user);
                 })
             })
             .then((user) => {
+                console.log('here after')
                 return user.generateLoginToken();    
             })
         } else {
-            return Promise.reject();
+            return Promise.reject('No such a user');
         }
     });  
 };
