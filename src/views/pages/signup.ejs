@@ -1,15 +1,72 @@
-<form action="/signup" method="post">
-<label for="username">Username:</label>
-<input type="text" name="username" id="">
-<br>
-<label for="email">Email:</label>
-<input type="text" name="email" id="">
-<br>
-<label for="password">Password:</label>
-<input type="password" name="password" id="">
-<br>
-<label for="">Confirm password:</label>
-<input type="password" name="" id="">
-<br>
-<input type="submit" value="Register">
-</form>
+<html>
+    <head>
+        
+        <title>TechShots</title>
+        <link href="/css/base.css" rel="stylesheet">
+        <link href="/css/signup.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500" rel="stylesheet">
+    </head>
+    <body>
+        <div class="topbar">
+          <span>
+            <img class="logo" src="/logo.svg" alt="TechShots Logo">
+            <h2 class="logo-text">TechShots</h2>
+          </span>
+        </div>
+
+        <div class="content">
+          <div class="info-container">
+            <span>
+              <h3>Stay updated on all the latest tech news, anywhere & anytime</h3>
+              <br>
+              <a>Learn More</a>
+            </span>
+          </div>
+          <div class="form-container">
+            <h2>Sign Up</h2>
+            <form action="/signup" method="post" onsubmit="return formValidation()">
+              <label for="username">Username</label>
+              <input type="text" name="username" id="username" autocomplete="username" required>
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" autocomplete="email" required>
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" autocomplete="new-password" required>
+              <label for="confirmPassword">Confirm password</label>
+              <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="new-password" required>
+              <p id="error-msg"></p>
+              <input type="submit" value="Register">
+            </form>
+          </div>
+        </div>
+    <script>
+        function formValidation() {
+
+          var username = document.getElementById("username").value;
+          var email = document.getElementById("email").value;
+          var password = document.getElementById("password").value;
+          var confirmPassword = document.getElementById("confirmPassword").value;
+          var errorMsg = document.getElementById("error-msg");
+
+          var emailReg = /[a-zA-Z0-9_.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,64}/;
+          
+          if (username == '' || email == '' || password == '' || confirmPassword == '') {
+            errorMsg.innerHTML = 'Please fill all the fields.';
+            return false;
+          }
+          if (email.match(emailReg) === null) {
+            errorMsg.innerHTML = 'Invalid email address';
+            return false;
+          }
+          if (password.length < 6) {
+            errorMsg.innerHTML = 'Password should be more than 6 characters';
+            return false;
+          }
+          if (password !== confirmPassword) {
+            errorMsg.innerHTML = 'Password and Confirm Password should be same';
+            return false;
+          }
+          return true;
+        }
+    </script>
+    </body>
+</html>
