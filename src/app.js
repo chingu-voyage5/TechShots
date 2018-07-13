@@ -82,7 +82,6 @@ app.get('/signin', (req, res) => {
 app.post('/signin', (req, res) => {
     if (req.cookies.token) res.send('How did you get here?');
     const user = req.body;
-    console.log(req.body)
     User.giveToken(user)
         .then((token) => {
             res.json({token})
@@ -93,7 +92,6 @@ app.post('/signin', (req, res) => {
 });
 
 app.get('/profile', authenticate, (req, res) => {
-    console.log(res.header)
   res.render('pages/profile');
 });
 
