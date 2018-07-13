@@ -49,7 +49,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.generateLoginToken = function(){
     const user = this;
     const access = 'login';
-    const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SEC);
+    const token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SEC).toString();
     user.tokens.push({access, token});
     
     return user.save().then(() => {
@@ -70,6 +70,7 @@ UserSchema.statics.checkByToken = function(token){
     const User = this;
     let decoded;
     try {
+        console.log(process.env.JWT_SEC)
         decoded = jwt.verify(token, process.env.JWT_SEC);
     } catch (e){
         return Promise.reject();
@@ -78,19 +79,20 @@ UserSchema.statics.checkByToken = function(token){
     return User.findOne({
         '_id': decoded._id,
         'tokens.token': token,
-        'token.access': 'login'
+        'tokens.access': 'login'
     })
 };
 
 UserSchema.statics.giveToken = function(receivedUser){
     const User = this;
+    console.log(receivedUser)
     return User
     .findOne({username: receivedUser.username})
     .then((user) => {
         if (user){ 
             return new Promise((resolve, reject) => {
-                bcrypt.compare(receivedUser.passsword, user.password, (err, res) => {
-                    if (!res) reject();
+                bcrypt.compare(receivedUser.password, user.password, (err, res) => {
+                    if (!res) reject('Invalid password');
                     resolve(user);
                 })
             })
@@ -98,7 +100,7 @@ UserSchema.statics.giveToken = function(receivedUser){
                 return user.generateLoginToken();    
             })
         } else {
-            return Promise.reject();
+            return Promise.reject('No such a user');
         }
     });  
 };
