@@ -58,10 +58,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
+    if (req.cookies.token) res.redirect('/');
     res.render('pages/signup');
 });
 
 app.post('/signup', (req, res) => {
+    if (req.cookies.token) res.send('How did you get here?');
     const user = req.body;
     const newUser = new User(user);
     newUser.save()
@@ -73,10 +75,12 @@ app.post('/signup', (req, res) => {
 });
 
 app.get('/signin', (req, res) => {
+    if (req.cookies.token) res.redirect('/');
     res.render('pages/signin');
 });
 
 app.post('/signin', (req, res) => {
+    if (req.cookies.token) res.send('How did you get here?');
     const user = req.body;
     console.log(req.body)
     User.giveToken(user)
