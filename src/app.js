@@ -12,6 +12,8 @@ const newsapi = new NewsAPI(process.env.NEWSAPI);
 // const { Post } = require('./db/models/Post');
 const { User } = require('./db/models/User');
 
+const { authenticate } = require('./middleware/authenticate');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -63,11 +65,28 @@ app.post('/signup', (req, res) => {
         .then(() => {
             return newUser.generateLoginToken();
         })
-        .then((token) => res.header('x-token', token).redirect('/'))
+        .then((token) => res.header('x-token', token).send(newUser))
         .catch((e) => res.send(e))
 });
 
-app.get('/profile', (req, res) => {
+app.get('/signin', (req, res) => {
+    res.render('pages/signin');
+});
+
+app.post('/signin', (req, res) => {
+    const user = req.body;
+    console.log(req.body)
+    User.giveToken(user)
+        .then((token) => {
+            res.json({token})
+        })
+        .catch((e) => {
+            res.redirect('/signin')
+        });
+});
+
+app.get('/profile', authenticate, (req, res) => {
+    console.log(res.header)
   res.render('pages/profile');
 });
 
