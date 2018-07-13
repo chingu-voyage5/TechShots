@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const NewsAPI = require('newsapi');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -21,6 +22,8 @@ app.use(express.static('assets'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
     newsapi.v2.sources({
