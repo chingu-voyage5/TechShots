@@ -1,6 +1,6 @@
 const { mongoose } = require('./../config');
 
-const MarkedPostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -17,11 +17,15 @@ const MarkedPostSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    views: {
+        type: Number,
+        default: 0
+    },
     source: {
         type: mongoose.Types.ObjectId
     }
 })
 
-const MarkedPost = mongoose.model('MarkedPost', MarkedPostSchema);
+const Post = mongoose.model('Post', PostSchema);
 
-model.exports = { MarkedPost };
+model.exports = { Post };
