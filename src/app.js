@@ -10,7 +10,7 @@ const app = express();
 
 const newsapi = new NewsAPI(process.env.NEWSAPI);
 
-// const { Post } = require('./db/models/Post');
+const { Post } = require('./db/models/Post');
 const { User } = require('./db/models/User');
 
 const { authenticate } = require('./middleware/authenticate');
@@ -52,6 +52,49 @@ app.get('/', (req, res) => {
         })
     })
     .then((posts) => {
+        const getPost = (post) => {
+            return new Promise((resolve, reject) => {
+                Post.findOne({title: post.title})
+                    .then((found) => {
+                        if (!found){
+                            post.views = 0;
+                            post.likes = 0;
+                            return post;
+                        } else {
+                            post.views = found.views;
+                            post.likes = found.likes;
+                            if (req.cookies.token){
+                                return User.checkByToken(req.cookies.token)
+                                    .then((user) => {
+                                        if (user.favorites.indexOf(found._id.toString()) > -1){
+                                            post.liked = 'active';
+                                            return post;
+                                        } else {
+                                            post.liked = '';
+                                            return post;
+                                        }
+                                    })
+                                    .catch(console.log)
+                            } else {
+                                return post;
+                            }
+                        }
+                        
+                    })
+                    .then(resolve)
+                    .catch(console.log)
+            });  
+        } 
+
+        const allPromises = [];
+
+        posts.forEach((post) => {
+            allPromises.push(getPost(post))
+        });
+
+        return Promise.all(allPromises);
+    })
+    .then((posts) => {
         res.render('pages/home', {posts});
     })
     .catch(console.log)
@@ -89,6 +132,56 @@ app.post('/signin', (req, res) => {
         .catch((e) => {
             res.redirect('/signin')
         });
+});
+
+app.post('/like', authenticate, (req, res) => {
+    Post.findOne({title: req.body.title})
+        .then((post) => {
+            if (!post){
+                req.body.likes = 1;
+                console.log(req.body)  
+                new Post(req.body)
+                    .save()
+                    .then((res) => {
+                        User.findOne({ username: req.user.username })
+                            .then((user) => {
+                                user.favorites.push(res._id.toString());
+                                user.save()
+                            })
+                    })
+                    .then(() => res.json({ likes:1 }))
+                    .catch(console.log);
+            } else {
+                User.findOne({ username: req.user.username }) 
+                    .then((found) => {
+                        if (found.favorites.indexOf(post._id.toString()) === -1) {
+                            found.favorites.push(post._id.toString());
+                            found.save().then(() => {
+                                post.likes += 1;
+                                post.save()
+                                    .then(() => res.json({likes: post.likes}));
+                    
+                            });
+                        } else {
+                            found.update({
+                                $pull: {
+                                    favorites: post._id.toString()
+                                }
+                            }).then(() => {
+                                post.likes -= 1;
+                                post.save()
+                                    .then(() => res.json({likes: post.likes}));
+                            })
+                            
+                        }
+                        
+                        
+                    })
+                    .catch(console.log);
+            }
+            
+        })
+    
 });
 
 app.get('/profile', authenticate, (req, res) => {

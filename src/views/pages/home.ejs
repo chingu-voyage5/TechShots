@@ -59,11 +59,16 @@
                       <p class="post-desc"><%= post.description %></p>
                       <hr>
                       <div class="post-btns">
-                          <span class="heart"></span> 
-                          <span class="label">120</span>
+                          <span class="heart <%= post.liked %>" id="<%= post.title %>">
+                            <span style="display: none;">
+                              <input type="text" id="description" value="<%= post.description %>">
+                              <input type="text" id="urlToImage" value="<%= post.urlToImage %>">
+                              <input type="text" id="source"  value="<%= post.url %>">
+                            </span>
+                          </span> 
+                          <span class="label" id="like-<%= post.title %>"><%= post.likes %></span>
                           <span class="eye"></span>
-                          <span class="label">320</span>
-                         | 🔰 Bookmark 
+                          <span class="label"><%= post.views %></span>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -97,16 +102,6 @@
           </div>
         </div>
 
-        <script>
-          const hearts = document.querySelectorAll('.heart');
-          hearts.forEach(heart => {
-            heart.addEventListener('click', () => {
-              heart.classList.toggle('active');
-            });
-          });
-          const filterButton = document.querySelector('.filter-btn');
-          const filters = document.querySelector('.filter-container');
-          filterButton.addEventListener('click', () => filters.classList.toggle('active'));
-        </script>
+        <script src="/js/home.js"></script>
     </body>
 </html>

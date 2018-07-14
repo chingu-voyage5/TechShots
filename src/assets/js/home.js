@@ -1,20 +1,36 @@
-const d = document;
-const http = new XMLHttpRequest();
+const hearts = document.querySelectorAll('.heart');
 
-const likeElems = d.getElementsByClassName('like-action');
+hearts.forEach(heart => {
+  heart.addEventListener('click', (e) => {
+    const thePost = e.target.getElementsByTagName('input');
+    const postBody = {
+        title: e.target.id,
+        description: thePost.description.value,
+        urlToImage: thePost.urlToImage.value,
+        source: thePost.source.value
+    };
+    fetch(
+        'like', 
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(postBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+    })
+    .then((res) => res.json())
+    .then((info) => {
+        console.log(info.likes)
+        const actioned = document.getElementById(`like-${postBody.title}`);
+        actioned.innerText = info.likes;
+    })
+    .catch(console.log)
+    heart.classList.toggle('active');
+  });
+});
 
-const likeAction = (e) => {
-    http.open('POST', 'like', true);
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    http.onreadystatechange = () => {
-        if (http.readyState === 4 && http.status === 200){
-            alert(http.responseText);
-        }
-    }
-    http.send('id='+e.target.id);
-};
+const filterButton = document.querySelector('.filter-btn');
+const filters = document.querySelector('.filter-container');
 
-// attaching click event listener for each element
-for (let i = 0; i < likeElems.length; i++){
-    likeElems[i].addEventListener('click', likeAction, false);
-}
+filterButton.addEventListener('click', () => filters.classList.toggle('active'));
