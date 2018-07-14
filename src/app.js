@@ -79,7 +79,6 @@ app.get('/', (req, res) => {
         return Promise.all(allPromises);
     })
     .then((posts) => {
-        console.log(posts)
         res.render('pages/home', {posts});
     })
     .catch(console.log)
@@ -117,6 +116,56 @@ app.post('/signin', (req, res) => {
         .catch((e) => {
             res.redirect('/signin')
         });
+});
+
+app.post('/like', authenticate, (req, res) => {
+    Post.findOne({title: req.body.title})
+        .then((post) => {
+            if (!post){
+                req.body.likes = 1;
+                console.log(req.body)  
+                new Post(req.body)
+                    .save()
+                    .then((res) => {
+                        User.findOne({ username: req.user.username })
+                            .then((user) => {
+                                user.favorites.push(res._id.toString());
+                                user.save()
+                            })
+                    })
+                    .then(() => res.json({ likes:1 }))
+                    .catch(console.log);
+            } else {
+                User.findOne({ username: req.user.username }) 
+                    .then((found) => {
+                        if (found.favorites.indexOf(post._id.toString()) === -1) {
+                            found.favorites.push(post._id.toString());
+                            found.save().then(() => {
+                                post.likes += 1;
+                                post.save()
+                                    .then(() => res.json({likes: post.likes}));
+                    
+                            });
+                        } else {
+                            found.update({
+                                $pull: {
+                                    favorites: post._id.toString()
+                                }
+                            }).then(() => {
+                                post.likes -= 1;
+                                post.save()
+                                    .then(() => res.json({likes: post.likes}));
+                            })
+                            
+                        }
+                        
+                        
+                    })
+                    .catch(console.log);
+            }
+            
+        })
+    
 });
 
 app.get('/profile', authenticate, (req, res) => {
