@@ -60,10 +60,9 @@
                       <hr>
                       <div class="post-btns">
                           <span class="heart"></span> 
-                          <span class="label">120</span>
+                          <span class="label"><%= post.likes %></span>
                           <span class="eye"></span>
-                          <span class="label">320</span>
-                         | 🔰 Bookmark 
+                          <span class="label"><%= post.views %></span>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -97,16 +96,6 @@
           </div>
         </div>
 
-        <script>
-          const hearts = document.querySelectorAll('.heart');
-          hearts.forEach(heart => {
-            heart.addEventListener('click', () => {
-              heart.classList.toggle('active');
-            });
-          });
-          const filterButton = document.querySelector('.filter-btn');
-          const filters = document.querySelector('.filter-container');
-          filterButton.addEventListener('click', () => filters.classList.toggle('active'));
-        </script>
+        <script src="/js/home.js"></script>
     </body>
 </html>
