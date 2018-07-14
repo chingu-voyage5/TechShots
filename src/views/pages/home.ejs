@@ -59,8 +59,14 @@
                       <p class="post-desc"><%= post.description %></p>
                       <hr>
                       <div class="post-btns">
-                          <span class="heart"></span> 
-                          <span class="label"><%= post.likes %></span>
+                          <span class="heart " id="<%= post.title %>">
+                            <span style="display: none;">
+                              <input type="text" id="description" value="<%= post.description %>">
+                              <input type="text" id="urlToImage" value="<%= post.urlToImage %>">
+                              <input type="text" id="source"  value="<%= post.url %>">
+                            </span>
+                          </span> 
+                          <span class="label" id="like-<%= post.title %>"><%= post.likes %></span>
                           <span class="eye"></span>
                           <span class="label"><%= post.views %></span>
                       </div>
