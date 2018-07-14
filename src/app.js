@@ -10,7 +10,7 @@ const app = express();
 
 const newsapi = new NewsAPI(process.env.NEWSAPI);
 
-// const { Post } = require('./db/models/Post');
+const { Post } = require('./db/models/Post');
 const { User } = require('./db/models/User');
 
 const { authenticate } = require('./middleware/authenticate');
@@ -52,6 +52,34 @@ app.get('/', (req, res) => {
         })
     })
     .then((posts) => {
+        const getPost = (post) => {
+            return new Promise((resolve, reject) => {
+                Post.findOne({title: post.title})
+                    .then((found) => {
+                        if (!found){
+                            post.views = 0;
+                            post.likes = 0;
+                        } else {
+                            post.views = found.views;
+                            post.likes = found.likes;
+                        }
+                        return post;
+                    })
+                    .then(resolve)
+                    .catch(console.log)
+            });  
+        } 
+
+        const allPromises = [];
+
+        posts.forEach((post) => {
+            allPromises.push(getPost(post))
+        });
+
+        return Promise.all(allPromises);
+    })
+    .then((posts) => {
+        console.log(posts)
         res.render('pages/home', {posts});
     })
     .catch(console.log)
