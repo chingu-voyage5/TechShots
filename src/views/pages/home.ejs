@@ -59,7 +59,7 @@
                       <p class="post-desc"><%= post.description %></p>
                       <hr>
                       <div class="post-btns">
-                          <span class="heart " id="<%= post.title %>">
+                          <span class="heart <%= post.liked %>" id="<%= post.title %>">
                             <span style="display: none;">
                               <input type="text" id="description" value="<%= post.description %>">
                               <input type="text" id="urlToImage" value="<%= post.urlToImage %>">
