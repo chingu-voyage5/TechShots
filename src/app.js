@@ -59,11 +59,27 @@ app.get('/', (req, res) => {
                         if (!found){
                             post.views = 0;
                             post.likes = 0;
+                            return post;
                         } else {
                             post.views = found.views;
                             post.likes = found.likes;
+                            if (req.cookies.token){
+                                return User.checkByToken(req.cookies.token)
+                                    .then((user) => {
+                                        if (user.favorites.indexOf(found._id.toString()) > -1){
+                                            post.liked = 'active';
+                                            return post;
+                                        } else {
+                                            post.liked = '';
+                                            return post;
+                                        }
+                                    })
+                                    .catch(console.log)
+                            } else {
+                                return post;
+                            }
                         }
-                        return post;
+                        
                     })
                     .then(resolve)
                     .catch(console.log)
