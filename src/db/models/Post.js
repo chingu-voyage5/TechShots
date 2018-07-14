@@ -22,10 +22,10 @@ const PostSchema = new mongoose.Schema({
         default: 0
     },
     source: {
-        type: mongoose.Types.ObjectId
+        type: String
     }
 })
 
 const Post = mongoose.model('Post', PostSchema);
 
-model.exports = { Post };
+module.exports = { Post };
