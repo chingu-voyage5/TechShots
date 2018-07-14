@@ -38,11 +38,7 @@ const UserSchema = new mongoose.Schema({
         }    
     ],
     favorites: [
-        {
-            post_id: {
-                type: mongoose.Schema.Types.ObjectId
-            }
-        }
+        { type: String }
     ]
 });
 
