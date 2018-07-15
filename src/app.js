@@ -100,6 +100,30 @@ app.get('/', (req, res) => {
     .catch(console.log)
 });
 
+app.post('/favorites', authenticate, (req, res) => {
+    const favPosts = [];
+    const getFavPosts = (postId) => {
+        return new Promise((resolve, reject) => {
+            Post.findById(postId)
+                .then(resolve)
+                .catch(reject);
+        });
+    }; 
+
+    const allFavPosts = []; 
+
+    // this let to pack all resolved Promises
+    req.user.favorites.forEach((id) => {
+        allFavPosts.unshift(getFavPosts(id));
+    });
+
+    Promise.all(allFavPosts)
+        .then((favs) => res.json({favs}))
+        .catch(console.log)
+    
+
+});
+
 app.get('/signup', (req, res) => {
     if (req.cookies.token) res.redirect('/');
     res.render('pages/signup');
