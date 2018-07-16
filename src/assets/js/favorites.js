@@ -14,14 +14,41 @@ const getFavs = () => {
     )
     .then((res) => res.json())
     .then((all) => {
-        console.log(all)
         return all.favs;
     })
     .then((posts) => {
         const favFeed = document.createElement('div');
         favFeed.className = 'feed';
 
-        console.log(posts)
+        const excludeFavPost = (element) => {
+            // make a request that will exclude the post
+            fetch(
+                'like',
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: JSON.stringify(
+                        { title: element.target.id }
+                    ),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+
+                }
+            )
+            .then(() => {
+                setTimeout(() => {
+                    // removing post represantion from DOM
+                    element.target.parentElement.parentElement.parentElement.remove();
+                }, 1500);
+
+                element.target.classList.remove('active');
+                const postLikes = document.getElementById('like-' + element.target.id);
+                postLikes.innerText -= 1;
+            })
+            .catch(console.log)
+
+        };
         
         posts.forEach((post) => {
             const feedCard = document.createElement('div');
@@ -70,6 +97,7 @@ const getFavs = () => {
             const heart = document.createElement('span');
             heart.className = 'heart active';
             heart.id = post.title;
+            heart.addEventListener('click', excludeFavPost);
             postBtns.appendChild(heart);
             
             const hiddenData = document.createElement('span');
