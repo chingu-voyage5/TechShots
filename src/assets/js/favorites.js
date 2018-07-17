@@ -178,9 +178,6 @@ const getFavs = () => {
             clearFix.className = 'clearfix'
             feedCard.appendChild(clearFix); 
 
-            const mainFeed = document.getElementsByClassName('feed')[0];
-            mainFeed.remove();
-
             document.getElementsByClassName('category')[0].appendChild(favFeed);
         });
 
@@ -188,4 +185,13 @@ const getFavs = () => {
     .catch(console.log)
 };
 
-favorites.addEventListener('click', getFavs)
+
+const favsClicked = () => {
+    if (getCategory('fav')){
+        getFavs();
+        mainFeed.remove();
+
+    }    
+};
+
+favorites.addEventListener('click', favsClicked);
