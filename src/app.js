@@ -33,6 +33,14 @@ app.get('/', (req, res) => {
         .catch(console.log)
 });
 
+app.post('/posts', (req, res) => {
+    console.log('here and', req.body)
+    posts
+        .getPosts(req.body.page, req.cookies)
+        .then((articles) => res.json({ articles }))
+        .catch(console.log) 
+});
+
 app.post('/favorites', authenticate, (req, res) => {
     const favPosts = [];
     const getFavPosts = (postId) => {
