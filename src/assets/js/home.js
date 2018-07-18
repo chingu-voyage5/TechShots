@@ -193,5 +193,17 @@ allLinkBtn.addEventListener('click', () => {
 });
 
 // paginator
+const nextPage = (() => {
+    let page = 1;
+    return () => {
+        page += 1;
+        loadNews(page)
+            .then((feed) => {
+                document.getElementsByClassName('feed')[0].appendChild(feed);
+            })
+            .catch(console.log)
+    };
+})();
 
-
+const paginator = document.getElementById('load-more');
+paginator.addEventListener('click', nextPage);
