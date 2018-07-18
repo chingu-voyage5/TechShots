@@ -140,43 +140,45 @@ const likeThePost = (title, thePost) => {
     
 };
 
-let page = 1;
+const loadNews = (page = 1) => {
+    fetch(
+        'posts',
+        {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify({ page }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    )
+    .then((res) => res.json())
+    .then((posts) => {
+        document.getElementsByClassName('feed')[0].remove();
+        const newsFeed = document.createElement('div');
+        newsFeed.className = 'feed';
+        posts.articles.forEach((post) => {
+            const likeBtn = insertPosts(newsFeed, post);
+            likeBtn.className = 'heart ' + post.liked;
+            likeBtn.addEventListener('click', (e) => {
+                const thePost = e.target.getElementsByTagName('input');
+                likeThePost(e.target.id, thePost)
+                    .then((info) => {
+                        const actioned = document.getElementById(`like-${e.target.id}`);
+                        actioned.innerText = info.likes;
+                        likeBtn.classList.toggle('active');
+                    });
+            });
+        });
+        document.getElementsByClassName('category')[0].appendChild(newsFeed);
+    })
+    .catch(console.log)
+}; 
 
 allLinkBtn.addEventListener('click', () => {
-    
     if (getCategory('all')){
-        fetch(
-            'posts',
-            {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify({ page }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )
-        .then((res) => res.json())
-        .then((posts) => {
-            document.getElementsByClassName('feed')[0].remove();
-            const newsFeed = document.createElement('div');
-            newsFeed.className = 'feed';
-            posts.articles.forEach((post) => {
-                const likeBtn = insertPosts(newsFeed, post);
-                likeBtn.className = 'heart ' + post.liked;
-                likeBtn.addEventListener('click', (e) => {
-                    const thePost = e.target.getElementsByTagName('input');
-                    likeThePost(e.target.id, thePost)
-                        .then((info) => {
-                            const actioned = document.getElementById(`like-${e.target.id}`);
-                            actioned.innerText = info.likes;
-                            likeBtn.classList.toggle('active');
-                        });
-                });
-            });
-            document.getElementsByClassName('category')[0].appendChild(newsFeed);
-        })
-        .catch(console.log)
+        loadNews();
     }
 });
+
 
