@@ -140,11 +140,8 @@ const likeThePost = (title, thePost) => {
     
 };
 
-let page = 1;
-
-allLinkBtn.addEventListener('click', () => {
-    
-    if (getCategory('all')){
+const loadNews = (page = 1) => {
+    return new Promise((resolve, reject) => {
         fetch(
             'posts',
             {
@@ -158,7 +155,6 @@ allLinkBtn.addEventListener('click', () => {
         )
         .then((res) => res.json())
         .then((posts) => {
-            document.getElementsByClassName('feed')[0].remove();
             const newsFeed = document.createElement('div');
             newsFeed.className = 'feed';
             posts.articles.forEach((post) => {
@@ -174,9 +170,40 @@ allLinkBtn.addEventListener('click', () => {
                         });
                 });
             });
-            document.getElementsByClassName('category')[0].appendChild(newsFeed);
+            resolve(newsFeed) // return new news feed;
+            
         })
-        .catch(console.log)
+        .catch(reject)
+    });
+
+    
+}; 
+
+allLinkBtn.addEventListener('click', () => {
+    if (getCategory('all')){
+        loadNews()
+            .then((newsFeed) => {
+                // remove current news feed
+                document.getElementsByClassName('feed')[0].remove();
+                // insert new parsed news
+                document.getElementsByClassName('category')[0].appendChild(newsFeed);
+            })
+            .catch(console.log);
     }
 });
 
+// paginator
+const nextPage = (() => {
+    let page = 1;
+    return () => {
+        page += 1;
+        loadNews(page)
+            .then((feed) => {
+                document.getElementsByClassName('feed')[0].appendChild(feed);
+            })
+            .catch(console.log)
+    };
+})();
+
+const paginator = document.getElementById('load-more');
+paginator.addEventListener('click', nextPage);
