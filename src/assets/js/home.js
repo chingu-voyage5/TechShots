@@ -187,6 +187,8 @@ allLinkBtn.addEventListener('click', () => {
                 document.getElementsByClassName('feed')[0].remove();
                 // insert new parsed news
                 document.getElementsByClassName('category')[0].appendChild(newsFeed);
+                nextPage.reset();
+                paginator.style.display = 'inline-block';
             })
             .catch(console.log);
     }
@@ -195,15 +197,20 @@ allLinkBtn.addEventListener('click', () => {
 // paginator
 const nextPage = (() => {
     let page = 1;
-    return () => {
-        page += 1;
-        loadNews(page)
-            .then((feed) => {
-                document.getElementsByClassName('feed')[0].appendChild(feed);
-            })
-            .catch(console.log)
+    
+    return {
+        go: () => {
+            page += 1;
+            loadNews(page)
+                .then((feed) => {
+                    document.getElementsByClassName('feed')[0].appendChild(feed);
+                })
+                .catch(console.log)
+        },
+        reset: () => page = 1
     };
+        
 })();
 
 const paginator = document.getElementById('load-more');
-paginator.addEventListener('click', nextPage);
+paginator.addEventListener('click', nextPage.go);
