@@ -83,6 +83,7 @@ const favsClicked = () => {
     if (getCategory('fav')){
         getFavs();
         document.getElementsByClassName('feed')[0].remove();
+        paginator.style.display = 'none';
     }    
 };
 
