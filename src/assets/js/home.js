@@ -188,6 +188,7 @@ allLinkBtn.addEventListener('click', () => {
                 // insert new parsed news
                 document.getElementsByClassName('category')[0].appendChild(newsFeed);
                 nextPage.reset();
+                paginator.style.display = 'inline-block';
             })
             .catch(console.log);
     }
