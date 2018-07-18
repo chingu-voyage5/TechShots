@@ -141,44 +141,57 @@ const likeThePost = (title, thePost) => {
 };
 
 const loadNews = (page = 1) => {
-    fetch(
-        'posts',
-        {
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify({ page }),
-            headers: {
-                'Content-Type': 'application/json'
+    return new Promise((resolve, reject) => {
+        fetch(
+            'posts',
+            {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({ page }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
-        }
-    )
-    .then((res) => res.json())
-    .then((posts) => {
-        document.getElementsByClassName('feed')[0].remove();
-        const newsFeed = document.createElement('div');
-        newsFeed.className = 'feed';
-        posts.articles.forEach((post) => {
-            const likeBtn = insertPosts(newsFeed, post);
-            likeBtn.className = 'heart ' + post.liked;
-            likeBtn.addEventListener('click', (e) => {
-                const thePost = e.target.getElementsByTagName('input');
-                likeThePost(e.target.id, thePost)
-                    .then((info) => {
-                        const actioned = document.getElementById(`like-${e.target.id}`);
-                        actioned.innerText = info.likes;
-                        likeBtn.classList.toggle('active');
-                    });
+        )
+        .then((res) => res.json())
+        .then((posts) => {
+            const newsFeed = document.createElement('div');
+            newsFeed.className = 'feed';
+            posts.articles.forEach((post) => {
+                const likeBtn = insertPosts(newsFeed, post);
+                likeBtn.className = 'heart ' + post.liked;
+                likeBtn.addEventListener('click', (e) => {
+                    const thePost = e.target.getElementsByTagName('input');
+                    likeThePost(e.target.id, thePost)
+                        .then((info) => {
+                            const actioned = document.getElementById(`like-${e.target.id}`);
+                            actioned.innerText = info.likes;
+                            likeBtn.classList.toggle('active');
+                        });
+                });
             });
-        });
-        document.getElementsByClassName('category')[0].appendChild(newsFeed);
-    })
-    .catch(console.log)
+            resolve(newsFeed) // return new news feed;
+            
+        })
+        .catch(reject)
+    });
+
+    
 }; 
 
 allLinkBtn.addEventListener('click', () => {
     if (getCategory('all')){
-        loadNews();
+        loadNews()
+            .then((newsFeed) => {
+                // remove current news feed
+                document.getElementsByClassName('feed')[0].remove();
+                // insert new parsed news
+                document.getElementsByClassName('category')[0].appendChild(newsFeed);
+            })
+            .catch(console.log);
     }
 });
+
+// paginator
 
 
