@@ -22,7 +22,6 @@ const getFavs = () => {
         {
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify({faaa: 'dd'}),
             headers: {
                 'Content-Type': 'application/json'
             } 

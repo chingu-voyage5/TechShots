@@ -7,27 +7,6 @@ accountButton.addEventListener('click', () => account.classList.toggle('active')
 // feed
 const mainFeed = document.getElementsByClassName('feed')[0];
 
-const allLinkBtn = document.getElementById('all-posts-btn');
-const favLinkBtn = document.getElementById('favorites-btn')
-
-const changeCategories = (all, fav) => {
-    return function(clicked){
-        if (clicked === 'all' && !all.classList.contains('active')){
-            fav.classList.remove('active');
-            all.classList.add('active');
-            return true;
-        } else if (clicked === 'fav' && !fav.classList.contains('active')){
-            all.classList.remove('active');
-            fav.classList.add('active');
-            return true;       
-        }
-        return false;
-    };
-    
-};
-
-const getCategory = changeCategories(allLinkBtn, favLinkBtn);
-
 const insertPosts = (newsFeed, post, favAction) => {
     const feedCard = document.createElement('div');
             
@@ -54,7 +33,7 @@ const insertPosts = (newsFeed, post, favAction) => {
     const postUrl = document.createElement('a');
     postUrl.className = 'post-link';
     postUrl.target = 'blank';
-    postUrl.href = post.source;
+    postUrl.href = post.url;
     const postTitle = document.createElement('h3');
     postTitle.className = 'post-title';
     postTitle.innerText = post.title;
@@ -186,20 +165,7 @@ const loadNews = (page = 1) => {
     
 }; 
 
-allLinkBtn.addEventListener('click', () => {
-    if (getCategory('all')){
-        loadNews()
-            .then((newsFeed) => {
-                // remove current news feed
-                document.getElementsByClassName('feed')[0].remove();
-                // insert new parsed news
-                document.getElementsByClassName('category')[0].appendChild(newsFeed);
-                nextPage.reset();
-                paginator.style.display = 'inline-block';
-            })
-            .catch(console.log);
-    }
-});
+
 
 // paginator
 const nextPage = (() => {

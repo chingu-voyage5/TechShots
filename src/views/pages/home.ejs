@@ -34,10 +34,13 @@
             </div>
             
             <div class="category">
+              <% if (user){ %>
               <ul>
                 <li class="active" id="all-posts-btn"><a href="#">All</a></li>
                 <li id="favorites-btn"><a href="#">Favorites</a></li>
               </ul>
+              <script src="/js/user-feed.js"></script>
+              <% } %>
             </div>
 
             <div class="feed">
@@ -111,11 +114,12 @@
 }
               document.getElementById('logout-btn').addEventListener('click', logout, false);
             </script>
+
+            <script src="/js/favorites.js"></script>
           <% } %>
 
         </div>
 
         <script src="/js/home.js"></script>
-        <script src="/js/favorites.js"></script>
     </body>
 </html>
