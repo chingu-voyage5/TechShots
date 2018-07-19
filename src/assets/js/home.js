@@ -34,6 +34,7 @@ const insertPosts = (newsFeed, post, favAction) => {
     postUrl.className = 'post-link';
     postUrl.target = 'blank';
     postUrl.href = post.url;
+    postUrl.addEventListener('click', visitNews);
     const postTitle = document.createElement('h3');
     postTitle.className = 'post-title';
     postTitle.innerText = post.title;
@@ -165,7 +166,38 @@ const loadNews = (page = 1) => {
     
 }; 
 
+const visitNews = (e) => { 
+    const thisPost = e.target.parentElement.parentElement; 
+    const field = (id) => thisPost.querySelector('#'+id).value;
+    const title = e.target.innerText; 
+    const newsData = {
+        title,
+        description: field("description"),
+        urlToImage: field("urlToImage"),
+        source: field("source")
+    };
+    
+    fetch(
+        'view',
+        {
+            method: 'POST',
+            body: JSON.stringify(newsData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    )
+    .then(() => {
+        let views = thisPost.querySelector('.views').innerText;
+        thisPost.querySelector('.views').innerText = parseInt(views) + 1;
+    })
+    .catch(console.log)
+};
 
+const sourceLink = document.querySelectorAll('.post-link');
+sourceLink.forEach((post) => {
+    post.addEventListener('click', visitNews)  
+})
 
 // paginator
 const nextPage = (() => {
