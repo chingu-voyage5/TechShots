@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
     posts
         .getPosts(1, req.cookies) // it returns resolved promise contains news
         .then((posts) => {
-            if (req.cookies){
+            if (req.cookies.token){
+                console.log(req.cookies.token)
                 User.checkByToken(req.cookies.token)
                 .then((account) => {
                     const user = {
@@ -38,7 +39,7 @@ app.get('/', (req, res) => {
                     res.render('pages/home', { posts, user })
                 })
                 .catch(console.log);
-            } else res.render('pages/home', {posts});
+            } else res.render('pages/home', {posts, user: null});
             
         })
         .catch(console.log)
