@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
         .getPosts(1, req.cookies) // it returns resolved promise contains news
         .then((posts) => {
             if (req.cookies.token){
-                console.log(req.cookies.token)
                 User.checkByToken(req.cookies.token)
                 .then((account) => {
                     const user = {
@@ -39,8 +38,7 @@ app.get('/', (req, res) => {
                     res.render('pages/home', { posts, user })
                 })
                 .catch(console.log);
-            } else res.render('pages/home', {posts, user: null});
-            
+            } else res.render('pages/home', {posts, user: null});      
         })
         .catch(console.log)
 });
@@ -77,8 +75,6 @@ app.post('/favorites', authenticate, (req, res) => {
     Promise.all(allFavPosts)
         .then((favs) => res.json({favs}))
         .catch(console.log)
-    
-
 });
 
 app.get('/signup', (req, res) => {
@@ -96,11 +92,6 @@ app.post('/signup', (req, res) => {
         })
         .then((token) => res.header('x-token', token).send(newUser))
         .catch((e) => res.send(e))
-});
-
-app.get('/signin', (req, res) => {
-    if (req.cookies.token) res.redirect('/');
-    res.render('pages/signin');
 });
 
 app.post('/signin', (req, res) => {
@@ -125,8 +116,7 @@ app.post('/like', authenticate, (req, res) => {
     Post.findOne({title: req.body.title})
         .then((post) => {
             if (!post){
-                req.body.likes = 1;
-                console.log(req.body)  
+                req.body.likes = 1; 
                 new Post(req.body)
                     .save()
                     .then((res) => {
@@ -173,11 +163,9 @@ app.post('/like', authenticate, (req, res) => {
 
 app.post('/view', (req, res) => {
     const visitedPost = req.body;
-    console.log(visitedPost);
     Post
         .findOne({title: visitedPost.title})
         .then((post) => {
-            console.log(post)
             if (!post){
                 visitedPost.views = 1;
                 visitedPost.likes = 0;
@@ -207,14 +195,6 @@ app.post('/view', (req, res) => {
                 });
             }
         })
-});
-
-app.get('/profile', authenticate, (req, res) => {
-  res.render('pages/profile');
-});
-
-app.get('/search', (req, res) => {
-  res.render('pages/search');
 });
 
 app.listen(3000, () => {
