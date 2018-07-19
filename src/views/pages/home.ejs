@@ -19,18 +19,7 @@
         </div>
 
         <div class="content">
-            <div class="recommendation">
-              <div class="recommendation-item">
-                <a href="/search">
-                  <img src="/search.png"/>
-                </a>
-                <span>Search</span>
-              </div>
-              <div class="recommendation-item">
-                  <img src="/suggestion.jpg"/>
-                  <span>TechCrunch</span>
-                  <span class="follow-btn">+</span>
-              </div>
+            <div style="height: 10px;">
             </div>
             
             <div class="category">
@@ -51,8 +40,7 @@
                     </div>
                     <div class="feed-details">
                       <p class="post-src">
-                        <img src="/tc.jpg"/>
-                        <!-- <a href="<%= post.url %>" target="blank"><%= post.source.id %></a> -->
+                        <a href="<%= post.url %>" class="post-link" target="blank"><%= post.source.id %></a>
                       </p>
                       <a href="<%= post.url %>" target="blank" class="post-link">  
                         <h3 class="post-title"><%= post.title %></h3>
