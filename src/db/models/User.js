@@ -66,7 +66,6 @@ UserSchema.statics.checkByToken = function(token){
     const User = this;
     let decoded;
     try {
-        console.log(process.env.JWT_SEC)
         decoded = jwt.verify(token, process.env.JWT_SEC);
     } catch (e){
         return Promise.reject();
@@ -81,7 +80,6 @@ UserSchema.statics.checkByToken = function(token){
 
 UserSchema.statics.giveToken = function(receivedUser){
     const User = this;
-    console.log(receivedUser)
     return User
     .findOne({username: receivedUser.username})
     .then((user) => {
@@ -108,7 +106,6 @@ UserSchema.pre('save', function(next){
             bcrypt.hash(user.password, salt, (err, hashed) => {
                 if (err) return console.error(err);
                 user.password = hashed;
-                console.log('hashed')
                 next();
             })
         })
