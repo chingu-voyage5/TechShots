@@ -7,22 +7,6 @@ accountButton.addEventListener('click', () => account.classList.toggle('active')
 // feed
 const mainFeed = document.getElementsByClassName('feed')[0];
 
-const changeCategories = (all, fav) => {
-    return function(clicked){
-        if (clicked === 'all' && !all.classList.contains('active')){
-            fav.classList.remove('active');
-            all.classList.add('active');
-            return true;
-        } else if (clicked === 'fav' && !fav.classList.contains('active')){
-            all.classList.remove('active');
-            fav.classList.add('active');
-            return true;       
-        }
-        return false;
-    };
-    
-};
-
 const insertPosts = (newsFeed, post, favAction) => {
     const feedCard = document.createElement('div');
             
