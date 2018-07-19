@@ -161,6 +161,44 @@ app.post('/like', authenticate, (req, res) => {
     
 });
 
+app.post('/view', (req, res) => {
+    const visitedPost = req.body;
+    console.log(visitedPost);
+    Post
+        .findOne({title: visitedPost.title})
+        .then((post) => {
+            console.log(post)
+            if (!post){
+                visitedPost.views = 1;
+                visitedPost.likes = 0;
+                const newPost = new Post(visitedPost);
+                newPost.save()
+                .then(() => {
+                    res.json({
+                        success: true
+                    });
+                })
+                .catch((e) => {
+                    res.json({
+                        success: false
+                    });
+                });
+            } else {
+                post.views += 1;
+                post.save().then(() => {
+                    res.json({
+                        success: true
+                    });
+                })
+                .catch((e) => {
+                    res.json({
+                        success: false
+                    });
+                });
+            }
+        })
+});
+
 app.get('/profile', authenticate, (req, res) => {
   res.render('pages/profile');
 });
