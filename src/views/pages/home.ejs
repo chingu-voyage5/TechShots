@@ -82,16 +82,32 @@
 
         </div>
         <div class="account-container">
-          <div>
-            <input type="text" name="username" id="auth-username" placeholder="Username" class="account-input">
-            <br>
-            <input type="password" name="password" id="auth-password" placeholder="Password" class="account-input">
-            <br>
-            <button id="authorize-btn">Sign in</button>
-          </div>
-          <div style="text-align: center;">
-            <a href="/signup" id="signup-link">Create a new account</a>
-          </div>
+          <% if(!user) {%>
+            <div id="signin-block">
+              <input type="text" name="username" id="auth-username" placeholder="Username" class="account-input">
+              <br>
+              <input type="password" name="password" id="auth-password" placeholder="Password" class="account-input">
+              <br>
+              <button id="authorize-btn" class="account-action-btn">Sign in</button>
+            </div>
+            <div style="text-align: center;">
+              <a href="/signup" id="signup-link">Create a new account</a>
+            </div>
+            <script>
+                authorize.addEventListener('click', logIn, false);
+             </script>
+          <% } %>
+
+          <% if(user){ %>
+            <div>
+              <p>Hello, <%= user.name %></p>
+              (<%= user.email %>)
+            </div>
+            <div>
+                <button class="account-action-btn">Log out</button>
+            </div>
+          <% } %>
+
         </div>
 
         <script src="/js/home.js"></script>
