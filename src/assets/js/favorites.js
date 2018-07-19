@@ -14,10 +14,10 @@ hearts.forEach(heart => {
   });
 });
 
-const filterButton = document.querySelector('.filter-btn');
-const filters = document.querySelector('.filter-container');
+const accountButton = document.querySelector('.account-btn');
+const account = document.querySelector('.account-container');
 
-filterButton.addEventListener('click', () => filters.classList.toggle('active'));
+accountButton.addEventListener('click', () => account.classList.toggle('active'));
 
 const favorites = document.getElementById('favorites-btn');
 
