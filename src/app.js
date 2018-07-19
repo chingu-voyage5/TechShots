@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
         .getPosts(1, req.cookies) // it returns resolved promise contains news
         .then((posts) => {
             if (req.cookies.token){
-                console.log(req.cookies.token)
                 User.checkByToken(req.cookies.token)
                 .then((account) => {
                     const user = {
@@ -117,8 +116,7 @@ app.post('/like', authenticate, (req, res) => {
     Post.findOne({title: req.body.title})
         .then((post) => {
             if (!post){
-                req.body.likes = 1;
-                console.log(req.body)  
+                req.body.likes = 1; 
                 new Post(req.body)
                     .save()
                     .then((res) => {
@@ -165,11 +163,9 @@ app.post('/like', authenticate, (req, res) => {
 
 app.post('/view', (req, res) => {
     const visitedPost = req.body;
-    console.log(visitedPost);
     Post
         .findOne({title: visitedPost.title})
         .then((post) => {
-            console.log(post)
             if (!post){
                 visitedPost.views = 1;
                 visitedPost.likes = 0;
