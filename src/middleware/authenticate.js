@@ -9,7 +9,7 @@ const authenticate = (req, res, next) => {
             req.token = token;
             next();
         })
-        .catch((e) => res.redirect('/signin'));
+        .catch((e) => res.json({ success: false }));
 }
 
 module.exports = { authenticate };
