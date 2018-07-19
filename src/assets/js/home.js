@@ -177,7 +177,10 @@ const visitNews = (e) => {
         title,
         description: field("description"),
         urlToImage: field("urlToImage"),
-        source: field("source")
+        source: {
+            url: field('sourceUrl'),
+            name: field('sourceName')
+        }
     };
     
     fetch(
