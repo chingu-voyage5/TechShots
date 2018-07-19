@@ -16,7 +16,7 @@
             <h2 class="logo-text">TechShots</h2>
           </span>
           <span>
-              <img class="img filter-btn" src="/settings.svg" alt="">
+              <img class="img account-btn" src="/avatar.svg" alt="">
             </span>
         </div>
 
@@ -83,16 +83,16 @@
           </footer>
 
         </div>
-        <div class="filter-container">
+        <div class="account-container">
           <div>
-            Refresh
+            <input type="text" name="username" id="auth-username" placeholder="Username" class="account-input">
+            <br>
+            <input type="password" name="password" id="auth-password" placeholder="Password" class="account-input">
+            <br>
+            <button id="authorize-btn">Sign in</button>
           </div>
-          <div>
-            Sort By
-            <select>
-              <option>Most Liked</option>
-              <option>Most Recent</option>
-            </select>
+          <div style="text-align: center;">
+            <a href="/signup" id="signup-link">Create a new account</a>
           </div>
         </div>
 
