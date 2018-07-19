@@ -33,7 +33,7 @@ const insertPosts = (newsFeed, post, favAction) => {
     const postUrl = document.createElement('a');
     postUrl.className = 'post-link';
     postUrl.target = 'blank';
-    postUrl.href = post.source;
+    postUrl.href = post.url;
     const postTitle = document.createElement('h3');
     postTitle.className = 'post-title';
     postTitle.innerText = post.title;
