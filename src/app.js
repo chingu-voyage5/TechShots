@@ -54,6 +54,10 @@ app.post('/posts', (req, res) => {
 });
 
 app.post('/favorites', authenticate, (req, res) => {
+    if (req.user.favorites.length === 0){
+        return res.json({ success: false });
+    }
+
     const favPosts = [];
     const getFavPosts = (postId) => {
         return new Promise((resolve, reject) => {
