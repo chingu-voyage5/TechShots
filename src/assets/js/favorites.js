@@ -14,11 +14,6 @@ hearts.forEach(heart => {
   });
 });
 
-const accountButton = document.querySelector('.account-btn');
-const account = document.querySelector('.account-container');
-
-accountButton.addEventListener('click', () => account.classList.toggle('active'));
-
 const favorites = document.getElementById('favorites-btn');
 
 const getFavs = () => {
