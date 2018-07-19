@@ -5,7 +5,6 @@ hearts.forEach(heart => {
     const thePost = e.target.getElementsByTagName('input');
     likeThePost(e.target.id, thePost)
     .then((info) => {
-        console.log(info.likes)
         const actioned = document.getElementById(`like-${e.target.id}`);
         actioned.innerText = info.likes;
     })
