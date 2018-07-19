@@ -40,9 +40,26 @@
                 <li id="favorites-btn"><a href="#">Favorites</a></li>
               </ul>
               <script>
-                const getCategory = changeCategories(allLinkBtn, favLinkBtn);
+                const changeCategories = (all, fav) => {
+                  return function(clicked){
+                      if (clicked === 'all' && !all.classList.contains('active')){
+                          fav.classList.remove('active');
+                          all.classList.add('active');
+                          return true;
+                      } else if (clicked === 'fav' && !fav.classList.contains('active')){
+                          all.classList.remove('active');
+                          fav.classList.add('active');
+                          return true;       
+                      }
+                      return false;
+                    };
+                  };
+
+
                 const allLinkBtn = document.getElementById('all-posts-btn');
                 const favLinkBtn = document.getElementById('favorites-btn')
+                const getCategory = changeCategories(allLinkBtn, favLinkBtn);
+                
                 allLinkBtn.addEventListener('click', () => {
                     if (getCategory('all')){
                         loadNews()
@@ -58,7 +75,6 @@
                     }
                 });
               </script>
-              <script src="/js/favorites.js"></script>
               <% } %>
             </div>
 
@@ -133,6 +149,8 @@
 }
               document.getElementById('logout-btn').addEventListener('click', logout, false);
             </script>
+
+            <script src="/js/favorites.js"></script>
           <% } %>
 
         </div>
