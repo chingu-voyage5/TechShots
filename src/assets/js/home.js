@@ -108,7 +108,10 @@ const likeThePost = (title, thePost) => {
             title,
             description: thePost.description.value,
             urlToImage: thePost.urlToImage.value,
-            source: thePost.source.value
+            source: {
+                url: thePost.sourceUrl.value,
+                name: thePost.sourceName.value
+            }
         };
         fetch(
             'like', 
