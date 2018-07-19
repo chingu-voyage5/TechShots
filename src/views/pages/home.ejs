@@ -93,9 +93,7 @@
             <div style="text-align: center;">
               <a href="/signup" id="signup-link">Create a new account</a>
             </div>
-            <script>
-                authorize.addEventListener('click', logIn, false);
-             </script>
+            <script src="/js/signin.js"></script>
           <% } %>
 
           <% if(user){ %>
@@ -106,12 +104,18 @@
             <div>
                 <button class="account-action-btn" id="logout-btn">Log out</button>
             </div>
+            <script>
+              const logout = () => {
+              document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
+              window.location.replace('/');
+}
+              document.getElementById('logout-btn').addEventListener('click', logout, false);
+            </script>
           <% } %>
 
         </div>
 
         <script src="/js/home.js"></script>
-        <script src="/js/signin.js"></script>
         <script src="/js/favorites.js"></script>
     </body>
 </html>
