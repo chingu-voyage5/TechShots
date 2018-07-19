@@ -29,6 +29,18 @@ const getFavs = () => {
     )
     .then((res) => res.json())
     .then((all) => {
+        if (all.success === false){
+            const newDiv = document.createElement('div');
+            newDiv.className = 'feed';
+            newDiv.style.backgroundColor = '#fff';
+            newDiv.style.color = '#ccc';
+            newDiv.style.textAlign = 'center';
+            newDiv.style.paddingTop = '20px';
+            newDiv.style.paddingBottom = '400px';
+            newDiv.innerHTML = '<h3>There are no favorite posts.</h3>'
+            const ref = document.querySelector('.category').after(newDiv)
+            throw new Error('No favorites')
+        }
         return all.favs;
     })
     .then((posts) => {
@@ -62,12 +74,20 @@ const getFavs = () => {
         };
         const favFeed = document.createElement('div');
         favFeed.className = 'feed';
+
         posts.forEach((post) => {
             const insertedFavs = insertPosts(favFeed, post, excludeFavPost);
             insertedFavs.className = 'heart active';
         
         });
-        document.getElementsByClassName('category')[0].appendChild(favFeed);
+
+        if (posts.length < 2){ // avoiding front side bug
+            const hiddenBlock = document.createElement('div');
+            hiddenBlock.style.paddingBottom = '170px';
+            hiddenBlock.style.backgroundColor = '#fff';
+            favFeed.appendChild(hiddenBlock);
+        }
+        document.getElementsByClassName('category')[0].after(favFeed);
     })
     .catch(console.log)
 };
