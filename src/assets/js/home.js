@@ -199,15 +199,28 @@ sourceLink.forEach((post) => {
     post.addEventListener('click', visitNews)  
 })
 
+// preloader
+const loader = (status) => {
+    if (status === 'on'){
+        document.getElementById('load-more').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+    } else if (status === 'off'){
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('load-more').style.display = 'inline-block';    
+    }
+};
+
 // paginator
 const nextPage = (() => {
     let page = 1;
     
     return {
         go: () => {
+            loader('on');
             page += 1;
             loadNews(page)
                 .then((feed) => {
+                    loader('off')
                     document.getElementsByClassName('feed')[0].appendChild(feed);
                 })
                 .catch(console.log)
