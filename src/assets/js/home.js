@@ -27,13 +27,14 @@ const insertPosts = (newsFeed, post, favAction) => {
     const postSrc = document.createElement('p');
     postSrc.className = 'post-src';
     feedDetails.appendChild(postSrc);
-    const sourceImg = document.createElement('img');
-    sourceImg.src = '/tc.jpg';
-    postSrc.appendChild(sourceImg);
+    const sourceName = document.createElement('a');
+    sourceName.href = post.url || post.source.url;
+    sourceName.innerText = post.source.name;
+    postSrc.appendChild(sourceName);
     const postUrl = document.createElement('a');
     postUrl.className = 'post-link';
     postUrl.target = 'blank';
-    postUrl.href = post.url;
+    postUrl.href = post.url || post.source.url;
     postUrl.addEventListener('click', visitNews);
     const postTitle = document.createElement('h3');
     postTitle.className = 'post-title';
@@ -65,7 +66,8 @@ const insertPosts = (newsFeed, post, favAction) => {
     const postData = [
         { id: 'description', value: post.description },
         { id: 'urlToImage', value: post.urlToImage },
-        { id: 'source', value: post.source }
+        { id: 'sourceName', value: post.source.name },
+        { id: 'sourceUrl', value:  post.source.url || post.url}
     ];
     
     postData.forEach((item) => {
