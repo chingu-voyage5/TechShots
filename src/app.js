@@ -111,6 +111,12 @@ app.post('/signin', (req, res) => {
         });
 });
 
+app.delete('/logout', authenticate, (req, res) => {
+    req.user.removeToken(req.token)
+            .then(() => res.json({ success: true }))
+            .catch(() => res.json({ success: false }));
+});
+
 app.post('/like', authenticate, (req, res) => {
     Post.findOne({title: req.body.title})
         .then((post) => {
