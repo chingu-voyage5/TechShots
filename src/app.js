@@ -28,7 +28,18 @@ app.get('/', (req, res) => {
     posts
         .getPosts(1, req.cookies) // it returns resolved promise contains news
         .then((posts) => {
-            res.render('pages/home', {posts});
+            if (req.cookies){
+                User.checkByToken(req.cookies.token)
+                .then((account) => {
+                    const user = {
+                        name: account.username,
+                        email: account.email
+                    };
+                    res.render('pages/home', { posts, user })
+                })
+                .catch(console.log);
+            } else res.render('pages/home', {posts});
+            
         })
         .catch(console.log)
 });
