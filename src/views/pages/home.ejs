@@ -52,7 +52,8 @@
                             <span style="display: none;">
                               <input type="text" id="description" value="<%= post.description %>">
                               <input type="text" id="urlToImage" value="<%= post.urlToImage %>">
-                              <input type="text" id="source"  value="<%= post.url %>">
+                              <input type="text" id="sourceName"  value="<%= post.source.name %>">
+                              <input type="text" id="sourceUrl"  value="<%= post.url %>">
                             </span>
                           </span> 
                           <span class="label" id="like-<%= post.title %>"><%= post.likes %></span>

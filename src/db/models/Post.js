@@ -22,7 +22,13 @@ const PostSchema = new mongoose.Schema({
         default: 0
     },
     source: {
-        type: String
+        url: {
+            type: String
+        },
+        name: {
+            type: String
+        }
+
     }
 })
 
