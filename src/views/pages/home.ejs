@@ -8,15 +8,13 @@
     </head>
     <body>
         <div class="topbar">
-          <span>
-              <a href="/profile"><img class="img" src="/avatar.svg" alt=""></a>
-          </span>
+          <span></span>
           <span>
             <img class="logo" src="/logo.svg" alt="TechShots Logo">
             <h2 class="logo-text">TechShots</h2>
           </span>
           <span>
-              <img class="img filter-btn" src="/settings.svg" alt="">
+              <img class="img account-btn" src="/avatar.svg" alt="">
             </span>
         </div>
 
@@ -83,20 +81,37 @@
           </footer>
 
         </div>
-        <div class="filter-container">
-          <div>
-            Refresh
-          </div>
-          <div>
-            Sort By
-            <select>
-              <option>Most Liked</option>
-              <option>Most Recent</option>
-            </select>
-          </div>
+        <div class="account-container">
+          <% if(!user) {%>
+            <div id="signin-block">
+              <input type="text" name="username" id="auth-username" placeholder="Username" class="account-input">
+              <br>
+              <input type="password" name="password" id="auth-password" placeholder="Password" class="account-input">
+              <br>
+              <button id="authorize-btn" class="account-action-btn">Sign in</button>
+            </div>
+            <div style="text-align: center;">
+              <a href="/signup" id="signup-link">Create a new account</a>
+            </div>
+            <script>
+                authorize.addEventListener('click', logIn, false);
+             </script>
+          <% } %>
+
+          <% if(user){ %>
+            <div>
+              <p>Hello, <%= user.name %></p>
+              (<%= user.email %>)
+            </div>
+            <div>
+                <button class="account-action-btn" id="logout-btn">Log out</button>
+            </div>
+          <% } %>
+
         </div>
 
         <script src="/js/home.js"></script>
+        <script src="/js/signin.js"></script>
         <script src="/js/favorites.js"></script>
     </body>
 </html>

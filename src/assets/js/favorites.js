@@ -14,11 +14,6 @@ hearts.forEach(heart => {
   });
 });
 
-const filterButton = document.querySelector('.filter-btn');
-const filters = document.querySelector('.filter-container');
-
-filterButton.addEventListener('click', () => filters.classList.toggle('active'));
-
 const favorites = document.getElementById('favorites-btn');
 
 const getFavs = () => {

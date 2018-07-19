@@ -194,11 +194,11 @@ body {
   top: 4.5px;
 }
 
-.filter-container{
+.account-container{
   display: none;
   color: #000;
   background-color: #fff;
-  width: 250px;
+  width: 220px;
   position: absolute;
   right: 2px;
   top: 52px;
@@ -208,18 +208,40 @@ body {
   padding: 0rem 0.2rem;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
-.filter-container div{
+.account-container div{
   padding: 0.8rem 0.3rem;
   border-bottom: 2px solid #D0CFCE;
 }
-.filter-container div:last-of-type{
+.account-container div:last-of-type{
   border-bottom: none;
 }
-.filter-container div select{
+.account-container div select{
   float: right;
 }
-.filter-container.active{
+.account-container.active{
   display: block;
+}
+.account-input {
+  border: 1px solid #ddd;
+  margin: 0 0 5px;
+  border-radius: 3px;
+  padding: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+.account-action-btn {
+  background: #039be5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  color: #e3f2fd;
+  padding: 3px;
+}
+#signup-link {
+  color: #444;
+  text-decoration: none;
 }
 
 .pagination{
