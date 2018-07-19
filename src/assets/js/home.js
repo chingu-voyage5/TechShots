@@ -1,3 +1,10 @@
+// account block
+const accountButton = document.querySelector('.account-btn');
+const account = document.querySelector('.account-container');
+
+accountButton.addEventListener('click', () => account.classList.toggle('active'));
+
+// feed
 const mainFeed = document.getElementsByClassName('feed')[0];
 
 const allLinkBtn = document.getElementById('all-posts-btn');
