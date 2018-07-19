@@ -39,8 +39,7 @@ app.get('/', (req, res) => {
                     res.render('pages/home', { posts, user })
                 })
                 .catch(console.log);
-            } else res.render('pages/home', {posts, user: null});
-            
+            } else res.render('pages/home', {posts, user: null});      
         })
         .catch(console.log)
 });
@@ -77,8 +76,6 @@ app.post('/favorites', authenticate, (req, res) => {
     Promise.all(allFavPosts)
         .then((favs) => res.json({favs}))
         .catch(console.log)
-    
-
 });
 
 app.get('/signup', (req, res) => {
@@ -96,11 +93,6 @@ app.post('/signup', (req, res) => {
         })
         .then((token) => res.header('x-token', token).send(newUser))
         .catch((e) => res.send(e))
-});
-
-app.get('/signin', (req, res) => {
-    if (req.cookies.token) res.redirect('/');
-    res.render('pages/signin');
 });
 
 app.post('/signin', (req, res) => {
@@ -207,14 +199,6 @@ app.post('/view', (req, res) => {
                 });
             }
         })
-});
-
-app.get('/profile', authenticate, (req, res) => {
-  res.render('pages/profile');
-});
-
-app.get('/search', (req, res) => {
-  res.render('pages/search');
 });
 
 app.listen(3000, () => {
