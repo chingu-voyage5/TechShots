@@ -29,5 +29,3 @@ const setCookie = (token) => {
     cookieAge = 60*60*24*365;
     d.cookie = `token=${token}; max-age=${cookieAge}; path=/`
 }
-
-authorize.addEventListener('click', logIn, false);
