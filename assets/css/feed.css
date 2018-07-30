@@ -199,7 +199,7 @@ body {
   color: #000;
   background-color: #fff;
   width: 220px;
-  position: absolute;
+  position: fixed;
   right: 2px;
   top: 52px;
   font-size: 1.1rem;
